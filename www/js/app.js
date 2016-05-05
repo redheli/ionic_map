@@ -131,13 +131,13 @@ function pbfStyle(feature) {
 // 	    if(r>150){
 // 	       style.color = 'rgba(255,255,0,0.5)';
 // 	    }
-	    if(mymap.getZoom()>18){
-	      style.radius = 20;
-	    }
-	    else
-	    {
-	      style.radius = 0.5;
-	    }
+// 	    if(mymap.getZoom()>18){
+// 	      style.radius = 20;
+// 	    }
+// 	    else
+// 	    {
+// 	      style.radius = 0.5;
+// 	    }
     }
     return style;
 }
@@ -184,7 +184,7 @@ mymap.on('zoomend', function() {
 //////
 var mvtSource = new L.TileLayer.MVTSource({
   url: "http://192.168.1.111:3001/services/postgis/cleantech/geom/vector-tiles/{z}/{x}/{y}.pbf?fields=name",
-  debug: true,
+  debug: false,
   clickableLayers: [],
   maxZoom: 22,
     minZoom: 6,

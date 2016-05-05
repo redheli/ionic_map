@@ -2024,7 +2024,9 @@ module.exports = L.TileLayer.MVTSource = L.TileLayer.Canvas.extend({
       layerOrdering: self.options.layerOrdering,
       style: self.style,
       name: key,
-      asynch: true
+      asynch: true,
+minZoom: self.options.minZoom,
+      maxZoom: self.options.maxZoom
     };
 
     if (self.options.zIndex) {
