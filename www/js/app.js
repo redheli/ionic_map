@@ -98,6 +98,12 @@ function pbfStyle(feature) {
 	  r = feature.properties.name;
 	  //console.log(r);
             style.color = 'rgba(' + r +',' + r + ','+r+',1)';
+// 	    if(r<150){
+// 	       style.color = 'rgba(0,255,0,0.5)';
+// 	    }
+// 	    if(r>150){
+// 	       style.color = 'rgba(255,255,0,0.5)';
+// 	    }
 	    if(mymap.getZoom()>18){
 	      style.radius = 20;
 	    }
