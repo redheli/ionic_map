@@ -43,12 +43,17 @@
 <script type="text/javascript" src="/lib/pbf/TileLayer.PBF/TileLayer.PBFSource.js"></script>
 <script type="text/javascript" src="/lib/pbf/TileLayer.PBF/TileLayer.PBFLayer.js"></script>
 <script type="text/javascript" src="/lib/pbf/TileLayer.PBF/PBFFeature.js"></script>
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com *.ionic.io *.openstreetmap.org; style-src 'self' 'unsafe-inline'; media-src *; img-src *; script-src 'self' 'unsafe-inline' 'unsafe-eval'">
+<meta http-equiv="Content-Security-Policy" content="default-src *; style-src * 'unsafe-inline'; media-src *; img-src *; script-src * 'unsafe-inline' 'unsafe-eval'">
 <!-- Mapbox GL -->
     <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.14.3/mapbox-gl.css" rel='stylesheet' />
     <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.14.3/mapbox-gl.js"></script>
     <script src="/lib/leaflet-mapbox-gl.js"></script>
     
+    
+    <script src="lib/jQuery/jQuery-2.1.1.min.js"></script>
+<script src="lib/Leaflet.MapboxVectorTile.js"></script>
+<script src="lib/basic_cleantech.js"></script>
+
   </head>
   <body ng-app="starter">
     <ion-pane>

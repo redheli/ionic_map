@@ -38,6 +38,32 @@ angular.module('starter', ['ionic', 'ngCordova'])
 })
 
 .controller('MapCtrl', function($scope, $state, $cordovaGeolocation) {
+  
+  $scope.$on("$stateChangeSuccess", function() {
+
+      var mainMarker = {
+            lat: 20.6219444444,
+            lng: -105.228333333,
+            focus: true,
+            message: "Puerto Vallarta, MX",
+            draggable: false};
+
+      $scope.map = {
+          defaults: {
+              tileLayer: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+              maxZoom: 18,
+              zoomControlPosition: 'bottomleft'},
+          center: {
+              lat : 20.6219444444,
+              lng : -105.228333333,
+              zoom : 15},
+          markers: {
+              mainMarker: angular.copy(mainMarker)}
+      };
+
+  });
+  
+  
   var options = {timeout: 10000, enableHighAccuracy: true};
  
   $cordovaGeolocation.getCurrentPosition(options).then(function(position){
@@ -45,6 +71,7 @@ angular.module('starter', ['ionic', 'ngCordova'])
     var init_lat = 1.3552799//42.299228067198634;
 var init_lng = 103.6945413;//-83.69717033229782;
 var mymap = L.map('map').setView([init_lat,init_lng], 15);
+ $scope.map = mymap;
 mymap.options.maxZoom = 22;
 
 
@@ -147,12 +174,86 @@ var style = {
 };
 
 //Add layer
-mymap.addLayer(pbfSource);
+// mymap.addLayer(pbfSource);
 
 mymap.on('zoomend', function() {
     console.log('zoom'+mymap.getZoom())
 });
 
+
+//////
+var mvtSource = new L.TileLayer.MVTSource({
+  url: "http://192.168.1.111:3001/services/postgis/cleantech/geom/vector-tiles/{z}/{x}/{y}.pbf?fields=name",
+  debug: true,
+  clickableLayers: [],
+  maxZoom: 22,
+    minZoom: 6,
+  getIDForLayerFeature: function(feature) {
+    return "";//feature.properties.name;//feature.properties.id;
+  },
+
+  /**
+   * The filter function gets called when iterating though each vector tile feature (vtf). You have access
+   * to every property associated with a given feature (the feature, and the layer). You can also filter
+   * based of the context (each tile that the feature is drawn onto).
+   *
+   * Returning false skips over the feature and it is not drawn.
+   *
+   * @param feature
+   * @returns {boolean}
+   */
+  filter: function(feature, context) {
+//     if (feature.layer.name === 'GAUL0') {
+      return true;
+//     }
+//     return false;
+  },
+
+  style: function (feature) {
+    var style = {};
+
+    var type = feature.type;
+    switch (type) {
+      case 1: //'Point'
+        style.color = 'rgba(49,79,79,1)';
+        style.radius = 0.5;
+        style.selected = {
+          color: 'rgba(255,255,0,0.5)',
+          radius: 6
+        };
+        break;
+      case 2: //'LineString'
+        style.color = 'rgba(161,217,155,0.8)';
+        style.size = 3;
+        style.selected = {
+          color: 'rgba(255,25,0,0.5)',
+          size: 4
+        };
+        break;
+      case 3: //'Polygon'
+        style.color = fillColor;
+        style.outline = {
+          color: strokeColor,
+          size: 1
+        };
+        style.selected = {
+          color: 'rgba(255,140,0,0.3)',
+          outline: {
+            color: 'rgba(255,140,0,1)',
+            size: 2
+          }
+        };
+        break;
+    }
+    return style;
+  }
+
+});
+
+//Add layer
+mymap.addLayer(mvtSource);
+
+//////
 var ACCESS_TOKEN = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpandmbXliNDBjZWd2M2x6bDk3c2ZtOTkifQ._QA7i5Mpkd_m30IGElHziw';
 /*var gl = L.mapboxGL({
     accessToken: ACCESS_TOKEN,
