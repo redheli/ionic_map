@@ -8,6 +8,8 @@
       Your Name Here
     </author>
   <content src="index.html"/>
+  <access origin="*.ionic.io"/>
+<access origin="*.openstreetmap.org"/>
   <access origin="*"/>
   <preference name="webviewbounce" value="false"/>
   <preference name="UIWebViewBounce" value="false"/>
